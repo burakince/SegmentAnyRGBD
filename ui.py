@@ -59,7 +59,7 @@ def get_parser():
         help="A list of user-defined class_names"
     )
     parser.add_argument(
-        "--output", 
+        "--output",
         default = "./pred",
         help="A file or directory to save output visualizations. "
         "If not given, will show output in an OpenCV window.",
@@ -135,7 +135,7 @@ def greet_sailvos3d(rgb_input, depth_map_input, rage_matrices_input, class_candi
                     break  # esc to quit
     else:
         raise NotImplementedError
-    
+
     Depth_Semantic_SAM_Mask = read_image('outputs/Depth_Semantic_SAM_Mask.png')
     RGB_Semantic_SAM_Mask = read_image('outputs/RGB_Semantic_SAM_Mask.png')
     Depth_Semantic_SAM = read_image('outputs/Depth_Semantic_SAM.png')
@@ -182,7 +182,7 @@ def greet_scannet(rgb_input, depth_map_input, class_candidates):
     depth_3d_sem = output3D['depth_3d_sem']
     rgb_3d_sam = output3D['rgb_3d_sam']
     depth_3d_sam = output3D['depth_3d_sam']
-    
+
     np.savez('outputs/xyzrgb.npz', rgb_3d_sam = rgb_3d_sem, depth_3d_sam = depth_3d_sem, rgb_3d_sam_mask = rgb_3d_sam, depth_3d_sam_mask = depth_3d_sam)
     demo.render_3d_video('outputs/xyzrgb.npz')
 
@@ -203,7 +203,7 @@ def greet_scannet(rgb_input, depth_map_input, class_candidates):
 with gr.Blocks(analytics_enabled=False) as segrgbd_iface:
         gr.Markdown("<div align='center'> <h2> Semantic Segment AnyRGBD </span> </h2> \
                      <a style='font-size:18px;color: #000000' href='https://github.com/Jun-CEN/SegmentAnyRGBD'> Github </div>")
-        
+
         #######t2v#######
         with gr.Tab(label="Dataset: Sailvos3D"):
             with gr.Column():
@@ -211,8 +211,8 @@ with gr.Blocks(analytics_enabled=False) as segrgbd_iface:
                     # with gr.Tab(label='input'):
                     with gr.Column():
                         with gr.Row():
-                            Input_RGB_Component = gr.Image(label = 'RGB_Input', type = 'filepath').style(width=320, height=200)
-                            Depth_Map_Output_Component = gr.Image(label = "Vis_Depth_Map").style(width=320, height=200)
+                            Input_RGB_Component = gr.Image(label = 'RGB_Input', type = 'filepath', width=320, height=200)
+                            Depth_Map_Output_Component = gr.Image(label = "Vis_Depth_Map", width=320, height=200)
                         with gr.Row():
                             Depth_Map_Input_Component = gr.File(label = 'Input_Depth_map')
                             Component_2D_to_3D_Projection_Parameters = gr.File(label = '2D_to_3D_Projection_Parameters')
@@ -221,11 +221,11 @@ with gr.Blocks(analytics_enabled=False) as segrgbd_iface:
                         vc_end_btn = gr.Button("Send")
                     with gr.Tab(label='Result'):
                         with gr.Row():
-                            RGB_Semantic_SAM_Mask_Component = gr.Image(label = "RGB_Semantic_SAM_Mask").style(width=320, height=200)
-                            RGB_Semantic_SAM_Mask_3D_Component = gr.Image(label = "3D_RGB_Semantic_SAM_Mask").style(width=320, height=200)
+                            RGB_Semantic_SAM_Mask_Component = gr.Image(label = "RGB_Semantic_SAM_Mask", width=320, height=200)
+                            RGB_Semantic_SAM_Mask_3D_Component = gr.Image(label = "3D_RGB_Semantic_SAM_Mask", width=320, height=200)
                         with gr.Row():
-                            Depth_Semantic_SAM_Mask_Component = gr.Image(label = "Depth_Semantic_SAM_Mask").style(width=320, height=200)
-                            Depth_Semantic_SAM_Mask_3D_Component = gr.Image(label = "3D_Depth_Semantic_SAM_Mask").style(width=320, height=200)
+                            Depth_Semantic_SAM_Mask_Component = gr.Image(label = "Depth_Semantic_SAM_Mask", width=320, height=200)
+                            Depth_Semantic_SAM_Mask_3D_Component = gr.Image(label = "3D_Depth_Semantic_SAM_Mask", width=320, height=200)
                 gr.Examples(examples=[
                         [
                             'UI/sailvos3d/ex1/inputs/rgb_000160.bmp',
@@ -252,26 +252,26 @@ with gr.Blocks(analytics_enabled=False) as segrgbd_iface:
             vc_end_btn.click(inputs=[Input_RGB_Component, Depth_Map_Input_Component, Component_2D_to_3D_Projection_Parameters, Class_Candidates_Component],
                             outputs=[RGB_Semantic_SAM_Mask_Component, RGB_Semantic_SAM_Mask_3D_Component, Depth_Map_Output_Component, Depth_Semantic_SAM_Mask_Component, Depth_Semantic_SAM_Mask_3D_Component],
                             fn=greet_sailvos3d)
-        
+
         with gr.Tab(label="Dataset: Scannet"):
             with gr.Column():
                 with gr.Row():
                     # with gr.Tab(label='input'):
                     with gr.Column():
                         with gr.Row():
-                            Input_RGB_Component = gr.Image(label = 'RGB_Input', type = 'filepath').style(width=320, height=200)
-                            Depth_Map_Output_Component = gr.Image(label = "Vis_Depth_Map").style(width=320, height=200)
+                            Input_RGB_Component = gr.Image(label = 'RGB_Input', type = 'filepath', width=320, height=200)
+                            Depth_Map_Output_Component = gr.Image(label = "Vis_Depth_Map", width=320, height=200)
                         with gr.Row():
                             Depth_Map_Input_Component = gr.File(label = "Input_Depth_Map")
                             Class_Candidates_Component = gr.Text(label = 'Class_Candidates')
                         vc_end_btn = gr.Button("Send")
                     with gr.Tab(label='Result'):
                         with gr.Row():
-                            RGB_Semantic_SAM_Mask_Component = gr.Image(label = "RGB_Semantic_SAM_Mask").style(width=320, height=200)
-                            RGB_Semantic_SAM_Mask_3D_Component = gr.Image(label = "3D_RGB_Semantic_SAM_Mask").style(width=320, height=200)
+                            RGB_Semantic_SAM_Mask_Component = gr.Image(label = "RGB_Semantic_SAM_Mask", width=320, height=200)
+                            RGB_Semantic_SAM_Mask_3D_Component = gr.Image(label = "3D_RGB_Semantic_SAM_Mask", width=320, height=200)
                         with gr.Row():
-                            Depth_Semantic_SAM_Mask_Component = gr.Image(label = "Depth_Semantic_SAM_Mask").style(width=320, height=200)
-                            Depth_Semantic_SAM_Mask_3D_Component = gr.Image(label = "3D_Depth_Semantic_SAM_Mask").style(width=320, height=200)
+                            Depth_Semantic_SAM_Mask_Component = gr.Image(label = "Depth_Semantic_SAM_Mask", width=320, height=200)
+                            Depth_Semantic_SAM_Mask_3D_Component = gr.Image(label = "3D_Depth_Semantic_SAM_Mask", width=320, height=200)
                 gr.Examples(examples=[
                         [
                             'UI/scannetv2/examples/scene0000_00/color/1660.jpg',
@@ -303,5 +303,4 @@ with gr.Blocks(analytics_enabled=False) as segrgbd_iface:
 
 
 demo = segrgbd_iface
-demo.launch()
-
+demo.launch(share=True)
