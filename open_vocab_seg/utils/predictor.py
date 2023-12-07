@@ -455,6 +455,7 @@ class VisualizationDemoIndoor(VisualizationDemo):
         #semantic_map = join(rgb_path, scene_name, 'semantic_label', color_name[0:-4] + '.pth')
 
         depth_img = cv2.imread(depth, -1) # read 16bit grayscale image
+        depth_img = cv2.resize(depth_img, (640, 480))
         depth_mask = (depth_img != 0)
         color_image = cv2.imread(color)
         color_image = cv2.resize(color_image, (640, 480))
